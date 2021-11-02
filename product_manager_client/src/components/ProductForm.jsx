@@ -7,19 +7,19 @@ const boxStyle={
     marginTop: '2rem'
 
 }
-const ProductForm = () => {
-    const [product, setProduct] = useState({})
+const ProductForm = ({setProductChange}) => {
     const [input, setInput] = useState({
         title: "",
-        price: 0,
+        price: "",
         description: ""
     })
 
     const onProductSubmit = (e) => {
         e.preventDefault();
         console.log(" form sub mited")
-        setProduct(input)
-        axios.post("http://localhost:8000/api/products", product)
+        console.log(input)
+        setProductChange({...input})
+        axios.post("http://localhost:8000/api/products", input)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
