@@ -3,4 +3,6 @@ module.exports = function (app) {
   app.get("/api/products", ProductController.index);
   app.get("/api/products/:id", ProductController.getOneProduct);
   app.post("/api/products", ProductController.createProduct);
+  app.put("/api/products/:id", ProductController.updateProduct);
+  app.delete("/api/products/:id", ProductController.deleteProduct);
 };

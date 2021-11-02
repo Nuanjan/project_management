@@ -7,7 +7,7 @@ const boxStyle={
     marginTop: '2rem'
 
 }
-const ProductForm = ({setProductChange}) => {
+const ProductForm = ({productList, setProductList}) => {
     const [input, setInput] = useState({
         title: "",
         price: "",
@@ -18,7 +18,7 @@ const ProductForm = ({setProductChange}) => {
         e.preventDefault();
         console.log(" form sub mited")
         console.log(input)
-        setProductChange({...input})
+        setProductList([...productList, input])
         axios.post("http://localhost:8000/api/products", input)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
