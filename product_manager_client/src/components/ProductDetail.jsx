@@ -27,7 +27,6 @@ const ProductDetail = () => {
   useEffect(() => {
       axios.get('http://localhost:8000/api/products/'+id)
       .then(res => {
-          console.log(res.data)
        setInput(res.data.product)
           setIsEdit(false)
       })

@@ -8,14 +8,14 @@ import React, { useState, useEffect } from "react";
 function App() {
   const [productList, setProductList] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:8000/api/products")
+    axios
+      .get("http://localhost:8000/api/products")
       .then((res) => {
         setProductList(res.data.products);
-        console.log(res.data.products)
       })
       .catch((err) => console.error(err));
   }, []);
-  
+  console.log(" list porduct", productList);
   return (
     <BrowserRouter>
       <div className="App">
@@ -24,7 +24,10 @@ function App() {
             productList={productList}
             setProductList={setProductList}
           />
-          <ProductList productList={productList} setProductList={setProductList} />
+          <ProductList
+            productList={productList}
+            setProductList={setProductList}
+          />
         </Route>
         <Route path="/api/products/:id">
           <ProductDetail />

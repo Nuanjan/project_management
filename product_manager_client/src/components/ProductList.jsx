@@ -31,7 +31,7 @@ const ProductList = ({productList, setProductList}) => {
     const onClickDelete = (productId) => {
         axios.delete("http://localhost:8000/api/products/"+productId)
         .then(res => {
-            setProductList(productList.filter(product => product._id !== productId))
+            setProductList([...productList.filter(product => product._id !== productId)])
         })
         .catch(err => console.error(err));
     }

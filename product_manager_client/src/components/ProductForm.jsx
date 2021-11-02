@@ -16,11 +16,11 @@ const ProductForm = ({productList, setProductList}) => {
 
     const onProductSubmit = (e) => {
         e.preventDefault();
-        console.log(" form sub mited")
         console.log(input)
-        setProductList([...productList, input])
         axios.post("http://localhost:8000/api/products", input)
-        .then((res) => console.log(res))
+        .then((res) => {
+            setProductList([...productList, res.data.product])
+        })
         .catch((err) => console.log(err));
     }
 
