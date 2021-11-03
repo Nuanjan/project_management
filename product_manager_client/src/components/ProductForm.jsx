@@ -7,25 +7,20 @@ const boxStyle={
     marginTop: '2rem'
 
 }
-const ProductForm = ({productList, setProductList}) => {
+const ProductForm = ({onProductSubmit, initialProduct}) => {
     const [input, setInput] = useState({
-        title: "",
-        price: "",
-        description: ""
+        title: initialProduct.title,
+        price: initialProduct.price,
+        description: initialProduct.description
     })
 
-    const onProductSubmit = (e) => {
+    const onProductSubmitHandler = (e) => {
         e.preventDefault();
-        console.log(input)
-        axios.post("http://localhost:8000/api/products", input)
-        .then((res) => {
-            setProductList([...productList, res.data.product])
-        })
-        .catch((err) => console.log(err));
+        onProductSubmit(input)
     }
 
     return (
-        <form style={boxStyle} onSubmit={onProductSubmit} >
+        <form style={boxStyle} onSubmit={onProductSubmitHandler} >
         <FormControl sx={{ width: '25ch' }} > 
             <TextField
             id="title"

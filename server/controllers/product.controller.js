@@ -17,6 +17,7 @@ module.exports.createProduct = (req, res) => {
 };
 module.exports.updateProduct = (req, res) => {
   console.log(req.params.id, " this is id");
+  console.log(req.body, " this is edit body request");
   Product.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
     .then((updatedProduct) => res.json(updatedProduct))
     .catch((err) => res.json({ message: "Something went wrong", error: err }));

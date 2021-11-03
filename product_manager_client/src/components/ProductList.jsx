@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
+import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
-import {AiFillDelete} from 'react-icons/ai';
+import DeleteButton from './DeleteButton';
+import {FaEdit} from 'react-icons/fa';
+
 
 const listStyle ={
     display: 'flex',
@@ -28,13 +31,9 @@ const productListStyle = {
 }
 const ProductList = ({productList, setProductList}) => {
    
-    const onClickDelete = (productId) => {
-        axios.delete("http://localhost:8000/api/products/"+productId)
-        .then(res => {
-            setProductList([...productList.filter(product => product._id !== productId)])
-        })
-        .catch(err => console.error(err));
-    }
+const removeFromProductList = productId => {
+    setProductList(productList.filter(product => product._id !== productId))
+}
     return (
         <div style={productListStyle}>
             <h1 style={{color: "#002984"}}>Product List</h1>
@@ -45,8 +44,11 @@ const ProductList = ({productList, setProductList}) => {
                 {productList.map(product => {
                 return <div key={product._id} style={listStyle}>
                     <a style={linkTagStyle} href={'/api/products/'+product._id}>{product.title}</a>
-                    <IconButton edge="end" aria-label="comments" onClick={(e) =>onClickDelete(product._id)}>
-                            <AiFillDelete size={36}/>
+                    <IconButton edge="end" aria-label="comments">
+                         <Link to={"/api/products/"+product._id+"/edit"}><FaEdit size={36} style={{color: "cornflowerBlue"}}/></Link>
+                    </IconButton>
+                    <IconButton edge="end" aria-label="comments">
+                            <DeleteButton productId={product._id } successCallback={() => removeFromProductList(product._id)}/>
                     </IconButton>
                 </div>
                 })}

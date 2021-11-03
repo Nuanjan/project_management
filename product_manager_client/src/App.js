@@ -5,6 +5,7 @@ import ProductList from "./components/ProductList";
 import ProductDetail from "./components/ProductDetail";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import EditProduct from "./components/EditProduct";
 function App() {
   const [productList, setProductList] = useState([]);
   useEffect(() => {
@@ -15,22 +16,33 @@ function App() {
       })
       .catch((err) => console.error(err));
   }, []);
-  console.log(" list porduct", productList);
+  const createProduct = product => {
+        axios.post("http://localhost:8000/api/products", product)
+        .then((res) => {
+            setProductList([...productList, res.data.product])
+        })
+        .catch((err) => console.log(err));
+  }
   return (
     <BrowserRouter>
       <div className="App">
         <Route exact path="/">
           <ProductForm
-            productList={productList}
-            setProductList={setProductList}
+            onProductSubmit={createProduct}
+            initialProduct={{title: "",
+            price: "",
+            description: ""}}
           />
           <ProductList
             productList={productList}
             setProductList={setProductList}
           />
         </Route>
-        <Route path="/api/products/:id">
+        <Route exact path="/api/products/:id">
           <ProductDetail />
+        </Route>
+        <Route path="/api/products/:id/edit">
+          <EditProduct />
         </Route>
       </div>
     </BrowserRouter>
